@@ -90,12 +90,12 @@ P      W   W  N   N  EEEEE  DDDD
     });
 
     // IP + Standort via Geoapify
-    fetch("https://api.geoapify.com/v1/ipinfo?&apiKey=DEIN_GEOAPIFY_KEY")
+    fetch("https://api.geoapify.com/v1/ipinfo?&apiKey=e9dde81d2d134aa1a1f6d5c73557478d")
       .then(response => response.json())
       .then(result => {
         const ip = result.ip || 'Unbekannt';
-        const city = result.city || 'Unbekannt';
-        const country = result.country || 'Unbekannt';
+        const city = result.city.name || 'Unbekannt';
+        const country = result.country.name || 'Unbekannt';
         const lat = result.location.latitude;
         const lon = result.location.longitude;
 
