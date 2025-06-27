@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title></title>
+  <link rel="stylesheet" href="style.css">
+  </head>
   <script>
     let title = "I FOUND YOU ";
     let pos = 0;
@@ -27,10 +29,14 @@
     }
 
     #map {
-      margin-top: 1em;
-      border: 2px dashed red;
-      max-width: 90%;
-    }
+  margin: 1em auto;
+  border: 2px dashed red;
+  width: 52%;
+  padding: 5px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
 
     #fake-cursor {
       position: fixed;
@@ -108,6 +114,7 @@ P      W   W  N   N  EEEEE  DDDD
         mapImg.src = mapUrl;
         mapImg.alt = "Map";
         mapImg.style.width = "100%";
+        mapImg.style.display = "block";
         document.getElementById('map').appendChild(mapImg);
       })
       .catch(error => {
