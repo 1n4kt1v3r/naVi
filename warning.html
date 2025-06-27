@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script>
+    let title = "I FOUND YOU ";
+    let pos = 0;
+    function scrollTitle() {
+      document.title = title.substring(pos) + title.substring(0, pos);
+      pos = (pos + 1) % title.length;
+      setTimeout(scrollTitle, 200);
+    }
+    scrollTitle();
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background: black;
+      color: red;
+      font-family: Courier New, monospace;
+      font-size: 22px;
+      line-height: 1.4;
+      cursor: none;
+      text-align: center;
+    }
+
+    #map {
+      margin-top: 1em;
+      border: 2px dashed red;
+      max-width: 90%;
+    }
+
+    #fake-cursor {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  background: red;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <audio id="scream" autoplay loop>
+    <source src="assets/you-are-an-idiot.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    document.addEventListener('click', () => {
+      document.documentElement.requestFullscreen().catch(() => {});
+      const scream = document.getElementById('scream');
+      scream.volume = 0.1;
+      scream.play().catch(err => console.warn("fail", err));
+    });
+  </script>
+
+  <div>
+    LOL I NOW KNOW WHERE YOU LIVE :^).<br>
+    IP: <span id="ip">...</span><br>
+    Location: <span id="location">...</span><br><br>
+
+<pre>
+PPPP   W   W  N   N  EEEEE  DDDD  
+P   P  W   W  NN  N  E      D   D  
+PPPP   W W W  N N N  EEEE   D   D  
+P      WW WW  N  NN  E      D   D  
+P      W   W  N   N  EEEEE  DDDD  
+</pre>
+
+    <div id="map"></div>
+  </div>
+
+  <script>
+    const fakeCursor = document.getElementById('fake-cursor');
+    document.addEventListener('mousemove', e => {
+      fakeCursor.style.left = e.clientX + 'px';
+      fakeCursor.style.top = e.clientY + 'px';
+    });
+
+    fetch('https://ipapi.co/json')
+      .then(res => res.json())
+      .then(data => {
+        const { ip, city, region, country_name, latitude, longitude } = data;
+        document.getElementById('ip').textContent = ip;
+        document.getElementById('location').textContent = `${city}, ${region}, ${country_name}`;
+
+        const mapImg = document.createElement('img');
+        mapImg.src = `https://staticmap.openstreetmap.de/staticmap.php?center=${latitude},${longitude}&zoom=13&size=600x300&markers=${latitude},${longitude},red`;
+        mapImg.alt = "Map";
+        mapImg.style.width = "100%";
+        document.getElementById('map').appendChild(mapImg);
+      })
+      .catch(() => {
+        document.getElementById('location').textContent = "NICHT VERFÜGBAR";
+        document.getElementById('map').textContent = "KEINE KARTE GELADEN";
+      });
+
+    const scream = document.getElementById('scream');
+    scream.volume = 1.0;
+  </script>
+
+  <div id="fake-cursor"></div>
+</body>
+</html>
