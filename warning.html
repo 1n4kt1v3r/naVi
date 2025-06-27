@@ -33,17 +33,19 @@
     }
 
     #fake-cursor {
-  position: fixed;
-  width: 18px;
-  height: 18px;
-  background: red;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%);
-}
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      background: black;
+      border: 2px solid white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+
     audio {
       display: none;
     }
@@ -80,28 +82,38 @@ P      W   W  N   N  EEEEE  DDDD
   </div>
 
   <script>
+    // Fake-Cursor Bewegung
     const fakeCursor = document.getElementById('fake-cursor');
     document.addEventListener('mousemove', e => {
       fakeCursor.style.left = e.clientX + 'px';
       fakeCursor.style.top = e.clientY + 'px';
     });
 
-    fetch('https://ipapi.co/json')
-      .then(res => res.json())
-      .then(data => {
-        const { ip, city, region, country_name, latitude, longitude } = data;
+    // IP + Standort via Geoapify
+    fetch("https://api.geoapify.com/v1/ipinfo?&apiKey=DEIN_GEOAPIFY_KEY")
+      .then(response => response.json())
+      .then(result => {
+        const ip = result.ip || 'Unbekannt';
+        const city = result.city || 'Unbekannt';
+        const country = result.country || 'Unbekannt';
+        const lat = result.location.latitude;
+        const lon = result.location.longitude;
+
         document.getElementById('ip').textContent = ip;
-        document.getElementById('location').textContent = `${city}, ${region}, ${country_name}`;
+        document.getElementById('location').textContent = `${city}, ${country}`;
+
+        const mapUrl = `https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=600&height=300&center=lonlat:${lon},${lat}&zoom=13&marker=lonlat:${lon},${lat};color:%23ff0000&apiKey=e9dde81d2d134aa1a1f6d5c73557478d`;
 
         const mapImg = document.createElement('img');
-        mapImg.src = `https://staticmap.openstreetmap.de/staticmap.php?center=${latitude},${longitude}&zoom=13&size=600x300&markers=${latitude},${longitude},red`;
+        mapImg.src = mapUrl;
         mapImg.alt = "Map";
         mapImg.style.width = "100%";
         document.getElementById('map').appendChild(mapImg);
       })
-      .catch(() => {
-        document.getElementById('location').textContent = "NICHT VERFÜGBAR";
-        document.getElementById('map').textContent = "KEINE KARTE GELADEN";
+      .catch(error => {
+        document.getElementById('location').textContent = "n.A";
+        document.getElementById('map').textContent = "Karte konnte nicht geladen werden";
+        console.warn(error);
       });
 
     const scream = document.getElementById('scream');
