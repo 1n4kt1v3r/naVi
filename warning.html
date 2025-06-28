@@ -4,72 +4,11 @@
   <meta charset="UTF-8">
   <title></title>
   <link rel="stylesheet" href="style.css">
-  </head>
-  <script>
-    let title = "I FOUND YOU ";
-    let pos = 0;
-    function scrollTitle() {
-      document.title = title.substring(pos) + title.substring(0, pos);
-      pos = (pos + 1) % title.length;
-      setTimeout(scrollTitle, 200);
-    }
-    scrollTitle();
-  </script>
-  <style>
-    body {
-      margin: 0;
-      padding: 40px;
-      background: black;
-      color: red;
-      font-family: Courier New, monospace;
-      font-size: 22px;
-      line-height: 1.4;
-      cursor: none;
-      text-align: center;
-    }
-
-    #map {
-  margin: 1em auto;
-  border: 2px dashed red;
-  width: 52%;
-  padding: 5px;
-  box-sizing: border-box;
-  display: inline-block;
-}
-
-
-    #fake-cursor {
-      position: fixed;
-      width: 18px;
-      height: 18px;
-      background: black;
-      border: 2px solid white;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      top: 0;
-      left: 0;
-      transform: translate(-50%, -50%);
-    }
-
-    audio {
-      display: none;
-    }
-  </style>
 </head>
 <body>
   <audio id="scream" autoplay loop>
     <source src="assets/you-are-an-idiot.mp3" type="audio/mpeg">
   </audio>
-
-  <script>
-    document.addEventListener('click', () => {
-      document.documentElement.requestFullscreen().catch(() => {});
-      const scream = document.getElementById('scream');
-      scream.volume = 0.1;
-      scream.play().catch(err => console.warn("fail", err));
-    });
-  </script>
 
   <div>
     LOL I NOW KNOW WHERE YOU LIVE :^).<br>
@@ -87,46 +26,8 @@ P      W   W  N   N  EEEEE  DDDD
     <div id="map"></div>
   </div>
 
-  <script>
-    // Fake-Cursor Bewegung
-    const fakeCursor = document.getElementById('fake-cursor');
-    document.addEventListener('mousemove', e => {
-      fakeCursor.style.left = e.clientX + 'px';
-      fakeCursor.style.top = e.clientY + 'px';
-    });
 
-    // IP + Standort via Geoapify
-    fetch("https://api.geoapify.com/v1/ipinfo?&apiKey=e9dde81d2d134aa1a1f6d5c73557478d")
-      .then(response => response.json())
-      .then(result => {
-        const ip = result.ip || 'Unbekannt';
-        const city = result.city.name || 'Unbekannt';
-        const country = result.country.name || 'Unbekannt';
-        const lat = result.location.latitude;
-        const lon = result.location.longitude;
-
-        document.getElementById('ip').textContent = ip;
-        document.getElementById('location').textContent = `${city}, ${country}`;
-
-        const mapUrl = `https://maps.geoapify.com/v1/staticmap?style=osm-carto&width=600&height=300&center=lonlat:${lon},${lat}&zoom=13&marker=lonlat:${lon},${lat};color:%23ff0000&apiKey=e9dde81d2d134aa1a1f6d5c73557478d`;
-
-        const mapImg = document.createElement('img');
-        mapImg.src = mapUrl;
-        mapImg.alt = "Map";
-        mapImg.style.width = "100%";
-        mapImg.style.display = "block";
-        document.getElementById('map').appendChild(mapImg);
-      })
-      .catch(error => {
-        document.getElementById('location').textContent = "n.A";
-        document.getElementById('map').textContent = "Karte konnte nicht geladen werden";
-        console.warn(error);
-      });
-
-    const scream = document.getElementById('scream');
-    scream.volume = 1.0;
-  </script>
-
-  <div id="fake-cursor"></div>
+  <!-- Externes JS einbinden -->
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,3 +1,7 @@
+html, body, * {
+  cursor: none !important;
+}
+
 body {
   margin: 0;
   padding: 40px;
@@ -19,20 +23,14 @@ body {
   display: inline-block;
 }
 
-#fake-cursor {
-  position: fixed;
-  width: 18px;
-  height: 18px;
-  background: black;
-  border: 2px solid white;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%);
+#map * {
+  cursor: none;
 }
 
 audio {
   display: none;
+}
+
+html, body, * {
+  cursor: none !important;
 }
