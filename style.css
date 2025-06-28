@@ -34,3 +34,40 @@ audio {
 html, body, * {
   cursor: none !important;
 }
+
+html, body, * {
+  cursor: none !important;
+}
+
+body {
+  margin: 0;
+  padding: 40px;
+  background: black;
+  color: red;
+  font-family: Courier New, monospace;
+  font-size: 22px;
+  line-height: 1.4;
+  cursor: none;
+  text-align: center;
+}
+
+#map {
+  margin: 1em auto;
+  border: 2px dashed red;
+  width: 60%;
+  padding: 5px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+#map * {
+  cursor: none;
+}
+
+audio {
+  display: none;
+}
+
+html, body, * {
+  cursor: none !important;
+}
