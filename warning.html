@@ -1,35 +1,33 @@
-=======
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title></title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Warning</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <audio id="scream" autoplay loop>
-    <source src="assets/you-are-an-idiot.mp3" type="audio/mpeg">
+    <source src="assets/you-are-an-idiot.mp3" type="audio/mpeg" />
   </audio>
 
   <div>
-    LOL I NOW KNOW WHERE YOU LIVE :^).<br>
-    IP: <span id="ip">...</span><br>
-    Location: <span id="location">...</span><br><br>
-
-<pre>
+    LOL I NOW KNOW WHERE YOU LIVE :^).<br />
+    IP: <span id="ip">...</span><br />
+    Location: <span id="location">...</span><br /><br />
+    <pre>
 PPPP   W   W  N   N  EEEEE  DDDD  
 P   P  W   W  NN  N  E      D   D  
 PPPP   W W W  N N N  EEEE   D   D  
 P      WW WW  N  NN  E      D   D  
 P      W   W  N   N  EEEEE  DDDD  
-</pre>
-
+    </pre>
     <div id="map"></div>
   </div>
 
+  <div id="popup-warning" class="hidden">👁️‍🗨️ You can't hide from me...</div>
+  <button id="trigger" style="display: none;">Play</button>
 
-  <!-- Externes JS einbinden -->
   <script src="script.js"></script>
 </body>
 </html>
->>>>>>> 4445938a310daa6db825647992a9908530b27039
